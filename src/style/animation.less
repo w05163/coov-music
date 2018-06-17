@@ -1,0 +1,50 @@
+// 所有全局动画 
+
+@keyframes fromRight{
+	from {transform: translate3d(100%,0,0); opacity: 0.2;}
+	to {transform: translate3d(0,0,0); opacity: 1;}
+}
+
+@keyframes fromLeft{
+	from {transform: translate3d(-100%,0,0); opacity: 0.2;}
+	to {transform: translate3d(0,0,0); opacity: 1;}
+}
+
+@keyframes toLeft{
+	from {transform: translate3d(0,0,0); opacity: 1;}
+	to {transform: translate3d(-80%,0,0); opacity: 0;}
+}
+
+@keyframes toRight{
+	from {transform: translate3d(0,0,0); opacity: 1;}
+	to {transform: translate3d(80%,0,0); opacity: 0;}
+}
+
+
+.route{
+	height: 100vh;
+	overflow-y: hidden;
+	position: absolute;
+	width: 100%;
+	animation-fill-mode: forwards;
+}
+:global(.route-leave) {
+	.route();
+	animation: toLeft .4s;
+}
+:global(.route-enter){
+	.route();
+	animation: fromRight .4s;
+}
+:global(.routeBack-leave) {
+	.route();
+	animation: toRight .4s;
+}
+:global(.routeBack-enter){
+	.route();
+	animation: fromLeft .4s;
+}
+:global(.route-leave-active){
+	opacity: 0;
+}
+
