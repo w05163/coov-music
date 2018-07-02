@@ -2,9 +2,26 @@
  * 全局基本样式
  */
 @import './animation.less';
+@import './color.less';
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+:global{
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: sans-serif;
+	}
+
+	.page{
+		width: 100vw;
+		min-height: 100vh;
+	}
+	
+	.center{
+		text-align: center;
+	}
+	.c-bg{
+		background: @primary;
+	}
 }
+
+
