@@ -2,5 +2,5 @@
 export default {
 	debug: true,
 	basePath: '/',
-	apiRoot: 'http://localhost:8000/api/',
+	apiRoot: 'https://localhost/api/',
 };

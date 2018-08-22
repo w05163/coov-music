@@ -26,14 +26,6 @@ export function checkStatus(response) {
 	throw error;
 }
 
-function pretreatment(data) {
-	if (data.code === '200') {
-		return { data, success: true };
-	}
-	return { data, success: false };
-}
-
-
 export function requestFile(url) {
 	return fetch(url).then((res) => {
 		if (res.status >= 200 && res.status < 300) {
@@ -66,15 +58,10 @@ export default function request(url, options = {}) {
 		opt.body = body;
 	} else {
 		headers['Content-Type'] = 'application/json';
-		opt.body = JSON.stringify({
-			data: body,
-			appKey: config.apiKey,
-			version: config.apiVersion,
-		});
+		opt.body = JSON.stringify(body);
 	}
 	opt.headers = new Headers(headers);
-
-	if (opt.method === 'GET') {
+	if (opt.method.toUpperCase() === 'GET') {
 		delete opt.body;
 	}
 
@@ -89,7 +76,6 @@ export default function request(url, options = {}) {
 			return checkStatus(res);
 		})
 		.then(parseJSON)
-		.then(pretreatment)
 		.then(resolve)
 		.catch(resolve);
 	});

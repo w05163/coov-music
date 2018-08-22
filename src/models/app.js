@@ -16,28 +16,25 @@ export default extend({
 	subscriptions: {
 	},
 	effects: {
-		*init(action, { put }, namespace) {
+		*init({ data }, { put }, namespace) {
 			yield put({ type: 'userInit' });
-			const res = yield call(service.login);
-			console.log(res);
 		},
 		*userInit(action, { put }) {
 			const token = getToken();
 			if (!token) return;
 			const user = yield call(service.userInfo);
-			user.account = user.mobile;
 			yield put({ type: 'set', user });
 		},
-		*login({ payload, isScanLogin }, { put }) {
+		*login({ data }, { put }) {
 			yield put({ type: 'set', loginStatus: 1 });
 			try {
-				const data = yield call(service.login, payload);
-				const { fuitsuToken, gizwitsExpireAt, gizwitsToken, gizwitsUid, ...user } = data;
-				setToken(fuitsuToken, 7);
-				user.account = payload.account;
+				const res = yield call(service.login, data);
+				const { token, ...user } = res;
+				setToken(token, 0.5);
+				user.account = data.account;
 				yield put({ type: 'userInit' });
 				yield put({ type: 'set', loginStatus: 2, user });
-				routerHistory.push('/house/room');
+				routerHistory.push('/');
 			} catch (error) {
 				console.error(error);
 				yield put({ type: 'set', loginStatus: 0 });

@@ -2,7 +2,10 @@ import { makeApi } from './index';
 
 const paths = {
 	login: 'open/login',
-	userInfo: 'user/info'
+	userInfo: {
+		url: 'user/info',
+		method: 'get'
+	}
 };
 
 const api = makeApi(paths);

@@ -12,7 +12,7 @@ export default {
 	title: '可乎音乐',
 	displayVersion: '0.0.1',
 	basePath: '/music',
-	apiRoot: 'http://localhost:8000/api/',
+	apiRoot: '/api/',
 	endPaths: ['/', '/login', /^\/home\//], // 用户处于这些路径时不能再返回上一页了
 	dbName: 'music',
 	debug: false,

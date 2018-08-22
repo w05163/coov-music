@@ -7,12 +7,13 @@ import { completeUrlExp } from '../utils/regexp';
 import historyManager from '../utils/routerHistory';
 
 export function pretreatment(res, dotShowError) {
+	console.log(res);
 	if (res.success) {
-		return res.data.data;
+		return res.data;
 	}
-	const error = res instanceof Error ? res : res.error || new Error(res.data ? res.data.message : res);
-	error.data = res.data;
-	if (res.data && res.data.code === '505') {
+	const error = res instanceof Error ? res : res.error || new Error(res.message);
+	error.data = res;
+	if (res.code === 901 || res.code === 902) {
 		// token 失效
 		historyManager.push('/login');
 	} else if (!dotShowError) {
@@ -20,7 +21,7 @@ export function pretreatment(res, dotShowError) {
 			showAlert('当前网络状态不好，请稍后再试。', '网络错误');
 		} else if (error.message === 'fetch timeout') {
 			showAlert('当前网络状态不好，请稍后再试。', '请求超时');
-		} else showAlert(res.data.message, '接口错误');
+		} else showAlert(res.message, '接口错误');
 	}
 	throw error;
 }
@@ -52,7 +53,7 @@ export function makeApi(paths) {
 			}, path);
 			const opt = {
 				method: 'post',
-				data: body,
+				body,
 				timeout: config.fetchTimeout * 1000,
 				...conf
 			};
